@@ -3,7 +3,7 @@ This is simple react photo gallery app that uses flickr api
 
 ## INSTALLATION
 01. Clone the repository: `git clone https://github.com/nauticalist/treehouse-jstd-react-gallery-app.git`
-02. Install the required dependencies with `npm install`
+02. Change directory to "treehouse-jstd-react-gallery-app" and install the required dependencies with `npm install`
 03. Rename config_template.json file in the src folder to config.json and add your flickr key to config.json file
 04. Launch the app with `npm start`.
 
