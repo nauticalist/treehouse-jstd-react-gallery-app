@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-import config from "../config.json";
 import { getPhotosByTag } from "../services/PhotoService";
 
 import SearchForm from "./common/SearchForm";
@@ -15,36 +14,41 @@ class Gallery extends Component {
   };
 
   async componentDidMount() {
-    const searchQuery = config.defaultTag;
+    const query = this.props.match.params.query;
+    const searchQuery = query ? query : "dardanelles";
 
-    const photos = await getPhotosByTag(searchQuery);
-    this.setState({
-      loading: false,
-      searchQuery,
-      photos,
-    });
+    await this.getPhotos(searchQuery);
   }
+
 
   async componentDidUpdate(prevProps, prevState) {
     const query = this.props.match.params.query;
-    let photos;
     if (query && this.state.searchQuery !== query) {
-      photos = await getPhotosByTag(query);
-      this.setState({
-        searchQuery: query,
-        loading: false,
-        photos,
-      });
+      await this.getPhotos(query);
     }
+  }
+
+  async getPhotos(query) {
+    if (this.state.loading === false) {
+      this.setState({loading: true});
+    }
+
+    const photos = await getPhotosByTag(query);
+
+    this.setState({
+      searchQuery: query,
+      loading: false,
+      photos,
+    });
   }
 
   render() {
     const { searchQuery, loading, photos } = this.state;
     return (
       <React.Fragment>
-        <SearchForm />
+        <SearchForm query={searchQuery}/>
         <Navbar />
-        <PhotoContainer query={searchQuery} photos={photos} />
+        <PhotoContainer loading={loading} query={searchQuery} photos={photos} />
       </React.Fragment>
     );
   }
