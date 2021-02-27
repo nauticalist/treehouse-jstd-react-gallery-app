@@ -1,6 +1,12 @@
 import axios from "axios";
 
-// https://github.com/axios/axios#interceptors
+/**
+ * Created a seperate service for handling remote server requests.
+ *
+ * Used interceptors to  handle errors
+ * https://github.com/axios/axios#interceptors
+ */
+
 axios.interceptors.response.use(null, (error) => {
   const expectedError =
     error.response &&

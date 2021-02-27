@@ -13,6 +13,11 @@ class Gallery extends Component {
     photos: [],
   };
 
+  /**
+   * get photos for defaul tag when page first rendered
+   *
+   * @returns {Promise<void>}
+   */
   async componentDidMount() {
     const query = this.props.match.params.query;
     const searchQuery = query ? query : "dardanelles";
@@ -20,7 +25,13 @@ class Gallery extends Component {
     await this.getPhotos(searchQuery);
   }
 
-
+  /**
+   * update the photo container component when a navlink is clicked or on search request
+   *
+   * @param prevProps
+   * @param prevState
+   * @returns {Promise<void>}
+   */
   async componentDidUpdate(prevProps, prevState) {
     const query = this.props.match.params.query;
     if (query && this.state.searchQuery !== query) {
@@ -28,6 +39,12 @@ class Gallery extends Component {
     }
   }
 
+  /**
+   * get photos according to request and update the state
+   *
+   * @param {String} query
+   * @returns {Promise<void>}
+   */
   async getPhotos(query) {
     if (this.state.loading === false) {
       this.setState({loading: true});
